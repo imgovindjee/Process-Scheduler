@@ -3,7 +3,11 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.net.URI;
 import java.util.List;
+import java.util.Objects;
 
 public class JAVA_GUI {
     private JFrame frame;
@@ -89,7 +93,7 @@ public class JAVA_GUI {
                 String selected = (String) option.getSelectedItem();
                 CPUScheduler scheduler;
 
-                switch (selected) {
+                switch (Objects.requireNonNull(selected)) {
                     case "FCFS" :
                         scheduler = new FirstComeFirstServe();
                         break;
@@ -149,10 +153,31 @@ public class JAVA_GUI {
             }
         });
 
+        JLabel jLabel1 = new JLabel();
+        jLabel1.setText("This Software is Completely free, and used to visualize the OS Process Scheduler's.");
+        jLabel1.setFont(new Font("Segoe UI", 0, 10));
+        jLabel1.setBounds(100, 480, 390, 10);
 
+        JLabel jLabel2 = new JLabel();
+        jLabel2.setText("MadeBy@ShreeGovindJee ");
+        jLabel2.setFont(new Font("Segoe UI", 0, 10));
+        jLabel2.setBounds(190, 490, 150, 15);
+
+        JLabel jlabel3 = new JLabel();
+        jlabel3.setFont(new Font("Segoe UI", 0, 10));
+        jlabel3.setForeground(new Color(0, 51, 204));
+        jlabel3.setText("https://imgovindjee.github.io/site/");
+        jlabel3.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        jlabel3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                jlabel3MouseClicked(e);
+            }
+        });
+        jlabel3.setBounds(315, 490, 200, 15);
 
         panel = new JPanel(null);
-        panel.setPreferredSize(new Dimension(500, 500));
+        panel.setPreferredSize(new Dimension(500, 520));
         panel.add(tablePanel);
         panel.add(addBtn);
         panel.add(removeBtn);
@@ -163,6 +188,9 @@ public class JAVA_GUI {
         panel.add(tatResultLabel);
         panel.add(option);
         panel.add(computeBtn);
+        panel.add(jLabel1);
+        panel.add(jLabel2);
+        panel.add(jlabel3);
 
         frame = new JFrame("CPU Scheduler Simulator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -172,11 +200,17 @@ public class JAVA_GUI {
         frame.pack();
     }
 
+    private void jlabel3MouseClicked(MouseEvent e) {
+        try {
+            Desktop.getDesktop().browse(new URI("https://imgovindjee.github.io/site/"));
+        } catch (Exception exception) {
+            System.out.println("[JAVA GUI] Error encountered while processing the Developer Site link.");
+            exception.printStackTrace(); // FOR ERROR VISUALIZATION
+        }
+    }
 
 
-
-
-//    Customize the Panel
+    //    Customize the Panel
     class CustomPanel extends JPanel{
         private List<Event> timeline;
 
